@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exciting Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .form-container {
+            position: relative;
+            width: 100%;
+            height: 90vh; /* Ensure the form container takes up most of the screen */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            z-index: 1;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Positioning the image at the bottom center */
+        .moving-image {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: auto;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Your image positioned at the bottom center -->
+    <img id="slidingImage" src="scena1.png" alt="Bottom Center Image" class="moving-image">
+    
+    <!-- Embed Google Form inside a transparent container -->
+    <div class="form-container">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScVSYc7s1DoBn4K0TeKevyV5w-ctSd-w0xuH30HClPVP8hkNg/viewform?usp=header" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+    </div>
+    
+    <script>
+        function launchConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // Change image every 2.5 seconds (2s for scena1.png, 0.5s for scena2.png)
+        let images = ['scena1.png', 'scena2.png'];
+        let currentIndex = 0;
+
+        function switchImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            document.getElementById('slidingImage').src = images[currentIndex];
+        }
+
+        // Set the interval to switch the image every 2.5 seconds
+        setInterval(function() {
+            switchImage();
+            if (currentIndex === 0) {
+                setTimeout(switchImage, 2000); // After 2 seconds, switch to scena1.png
+            }
+        }, 2500); // Cycle duration of 2.5 seconds
+
+        window.onload = launchConfetti;
+    </script>
+</body>
+</html>
